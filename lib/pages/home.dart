@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/pages/favourite.dart';
 import 'package:pokedex/widgets/poke_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,7 +16,10 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.red,
         leading: Icon(Icons.catching_pokemon, size: 30),
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.favorite))
+          IconButton(onPressed: () {
+             Navigator.pushNamedAndRemoveUntil(
+              context, FavouritePage.route, (route) => false);
+          }, icon: Icon(Icons.favorite))
         ],
       ),
       body: Padding(

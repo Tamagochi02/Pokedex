@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:pokedex/models/db.dart';
+import 'package:pokedex/models/pokemon.dart';
+import 'package:sqflite/sqflite.dart';
+
+bool estaPokemon = false;
 
 class PokemonInfoPage extends StatefulWidget {
   static const route = "/pokemoninfo";
   final String nombre;
   final String imagen;
-  const PokemonInfoPage({Key? key, this.nombre = "", this.imagen = ""})
+  final int id;
+  const PokemonInfoPage(
+      {Key? key, this.nombre = "", this.imagen = "", this.id = 0})
       : super(key: key);
 
   @override
@@ -53,7 +59,7 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
                   color: Color.fromARGB(255, 128, 127, 127),
                 ),
                 width: double.maxFinite,
-                height: 300,
+                height: 350,
                 child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
@@ -63,26 +69,55 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
                         Text("Version Shiny",
                             style:
                                 TextStyle(fontSize: 20, color: Colors.white)),
+                        //
+                        SizedBox(height: 20),
+                        //
                         Row(
-                          children: [],
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.network(
+                                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${widget.id}.png"),
+                            Image.network(
+                                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/${widget.id}.png")
+                          ],
+                        ),
+                        Text("Normal",
+                            style:
+                                TextStyle(fontSize: 20, color: Colors.white)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.network(
+                                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${widget.id}.png"),
+                            Image.network(
+                                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${widget.id}.png")
+                          ],
+                        ),
+                        //
+                        SizedBox(height: 10),
+                        //
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                DB.insert(Pokemon(
+                                    id: widget.id, name: widget.nombre));
+                                // estaPokemon = true;
+                                print(DB.pokemons());
+                              },
+                              child: Text("Favoritos"),
+                              style:
+                                  ElevatedButton.styleFrom(primary: Colors.red),
+                            ),
+                            // Icon(estaPokemon ? Icons.favorite :Icons.favorite_border)
+                          ],
                         )
                       ],
                     )),
               ),
             ],
-          )
-          //
-          // child: ListView(children: [
-          //   SizedBox(
-          //     child: Container(
-          //       child: Image.network(imagen, scale: 1.0),
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          //   Text(nombre)
-          // ]),
-          // ),
-          ),
+          )),
     );
   }
 }
