@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pokedex/models/pokemon.dart';
+// import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/pages/pokemonInfo.dart';
 
 List<String> listaPokemon = [];
 List<int> listaIds = [];
@@ -26,14 +27,12 @@ class _PokeCardState extends State<PokeCard> {
         .get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=151'));
 
     if (response.statusCode == 200) {
-      print("Conectado a api");
       String body = utf8.decode(response.bodyBytes);
       final jsonData = jsonDecode(body);
 
       for (var item in jsonData["results"]) {
         nombre = item["name"];
         ids += 1;
-        print(ids);
         // listaPokemon.add(Pokemon(name: item["name"], id: ids));
         listaPokemon.add(nombre);
         listaIds.add(ids);
@@ -71,7 +70,7 @@ class _PokeCardState extends State<PokeCard> {
           return GridView.count(
               // crossAxisCount: 2, children: _listaPokemon(snapshot.data);
               crossAxisCount: 2,
-              children: _listaPokemon(p));
+              children: _listaPokemon(p, context));
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
@@ -88,39 +87,61 @@ getIndexId(String nombre) {
 }
 
 // List<Widget> _listaPokemon(List<Pokemon> data) {
-List<Widget> _listaPokemon(List<String> data) {
+List<Widget> _listaPokemon(List<String> data, BuildContext context) {
   List<Widget> pokemons = [];
 
   data.asMap().forEach((indice, name) => pokemons.add(Card(
-        child: Container(
-          alignment: Alignment.center,
-          width: 5,
-          height: 200,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Color.fromARGB(255, 141, 141, 141),
+        child: InkWell(
+          // onTap: () => Navigator.pushNamedAndRemoveUntil(
+          //   context,
+          //   PokemonInfoPage.route,
+          //   (route) => false,
+          //   arguments: PokemonInfoPage(nom: name, img: "https://pokefanaticos.com/pokedex/assets/images/pokemon_imagenes/${indice+1}.png")
+          // ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PokemonInfoPage(
+                      nombre: name,
+                      // imagen: "https://raw.githubusercontent.com/PokeAPI/sprites/f301664fbbce6ccbe09f9561287e05653379f870/sprites/pokemon/${indice + 1}.png",
+                      imagen: "https://pokefanaticos.com/pokedex/assets/images/pokemon_imagenes/${indice+1}.png",
+                    )),
           ),
-          child: Column(children: [
-            Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(children: [
-                  Image.network(
-                      "https://raw.githubusercontent.com/PokeAPI/sprites/f301664fbbce6ccbe09f9561287e05653379f870/sprites/pokemon/${indice + 1}.png"),
-                  // 
-                  SizedBox(height:17),
-                  // 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(name,
-                          style: TextStyle(color: Colors.white, fontSize: 20)),
-                          // 
-                      Text("#${indice + 1}",
-                          style: TextStyle(color: Colors.white, fontSize: 20)),
-                    ],
-                  )
-                ]))
-          ]),
+          child: Container(
+            alignment: Alignment.center,
+            width: 5,
+            height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color.fromARGB(255, 128, 127, 127),
+            ),
+            child: Column(children: [
+              Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(children: [
+                    //
+                    // SizedBox(height: 30),
+                    //
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(name,
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20)),
+                        //
+                        Text("#${indice + 1}",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20)),
+                      ],
+                    ),
+                    Image.network(
+                      // "https://raw.githubusercontent.com/PokeAPI/sprites/f301664fbbce6ccbe09f9561287e05653379f870/sprites/pokemon/${indice + 1}.png"),
+                      "https://pokefanaticos.com/pokedex/assets/images/pokemon_imagenes/${indice + 1}.png",
+                      scale: 1.5,
+                    ),
+                  ]))
+            ]),
+          ),
         ),
       )));
   return pokemons;
