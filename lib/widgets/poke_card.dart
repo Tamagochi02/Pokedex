@@ -92,12 +92,6 @@ List<Widget> _listaPokemon(List<String> data, BuildContext context) {
 
   data.asMap().forEach((indice, name) => pokemons.add(Card(
         child: InkWell(
-          // onTap: () => Navigator.pushNamedAndRemoveUntil(
-          //   context,
-          //   PokemonInfoPage.route,
-          //   (route) => false,
-          //   arguments: PokemonInfoPage(nom: name, img: "https://pokefanaticos.com/pokedex/assets/images/pokemon_imagenes/${indice+1}.png")
-          // ),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -105,6 +99,7 @@ List<Widget> _listaPokemon(List<String> data, BuildContext context) {
                       nombre: name,
                       // imagen: "https://raw.githubusercontent.com/PokeAPI/sprites/f301664fbbce6ccbe09f9561287e05653379f870/sprites/pokemon/${indice + 1}.png",
                       imagen: "https://pokefanaticos.com/pokedex/assets/images/pokemon_imagenes/${indice+1}.png",
+                      id: indice+1,
                     )),
           ),
           child: Container(
