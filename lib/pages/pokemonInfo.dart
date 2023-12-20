@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:pokedex/models/db.dart';
 import 'package:pokedex/models/pokemon.dart';
-import 'package:sqflite/sqflite.dart';
 
 bool estaPokemon = false;
 
@@ -29,14 +27,14 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
         backgroundColor: Colors.red,
       ),
       body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           //
           child: ListView(
             children: [
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 185, 183, 183),
+                  color: const Color.fromARGB(255, 185, 183, 183),
                 ),
                 width: double.maxFinite,
                 height: 300,
@@ -46,31 +44,31 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.network(widget.imagen),
+                        Image.network(widget.imagen), // Imagen del pokemon
                       ],
                     )),
               ),
               //
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               //
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 128, 127, 127),
+                  color: const Color.fromARGB(255, 128, 127, 127),
                 ),
                 width: double.maxFinite,
-                height: 350,
+                height: 370,
                 child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("Version Shiny",
+                        const Text("Version Shiny",
                             style:
                                 TextStyle(fontSize: 20, color: Colors.white)),
                         //
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         //
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -81,7 +79,7 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
                                 "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/${widget.id}.png")
                           ],
                         ),
-                        Text("Normal",
+                        const Text("Normal",
                             style:
                                 TextStyle(fontSize: 20, color: Colors.white)),
                         Row(
@@ -94,7 +92,7 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
                           ],
                         ),
                         //
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         //
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -106,9 +104,9 @@ class _PokemonInfoPageState extends State<PokemonInfoPage> {
                                 // estaPokemon = true;
                                 print(DB.pokemons());
                               },
-                              child: Text("Favoritos"),
                               style:
                                   ElevatedButton.styleFrom(primary: Colors.red),
+                              child: const Text("Favoritos"),
                             ),
                             // Icon(estaPokemon ? Icons.favorite :Icons.favorite_border)
                           ],

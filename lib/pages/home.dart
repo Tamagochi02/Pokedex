@@ -9,20 +9,20 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 224, 224, 224),
+      backgroundColor: const Color.fromARGB(255, 224, 224, 224),
       appBar: AppBar(
-        title: Text("Pokemon"),
+        title: const Text("Pokemon"),
         centerTitle: true,
         backgroundColor: Colors.red,
-        leading: Icon(Icons.catching_pokemon, size: 30),
+        leading: const Icon(Icons.catching_pokemon, size: 30),
         actions: <Widget>[
           IconButton(onPressed: () {
              Navigator.pushNamedAndRemoveUntil(
               context, FavouritePage.route, (route) => false);
-          }, icon: Icon(Icons.favorite))
+          }, icon: const Icon(Icons.favorite))
         ],
       ),
-      body: Padding(
+      body: const Padding(
         padding: EdgeInsets.all(10),
         //
         child: PokeCard()
